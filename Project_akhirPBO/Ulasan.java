@@ -1,6 +1,15 @@
 public class Ulasan {
     private String komentar;
     private int rating;
+    private int idUlasan;
+
+    public int getIdUlasan() {
+        return idUlasan;
+    }
+
+    public void setIdUlasan(int idUlasan) {
+        this.idUlasan = idUlasan;
+    }
 
     public String getKomentar() {
         return komentar;
