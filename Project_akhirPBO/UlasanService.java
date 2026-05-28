@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class UlasanService {
     private ArrayList<Ulasan> daftarUlasan = new ArrayList<>();
@@ -26,7 +27,7 @@ public class UlasanService {
         }
 
         for (Ulasan u : daftarUlasan) {
-            u.menampilkanUlasan();
+            u.tampilkanUlasan();
             System.out.println("====================");
         }
     }
@@ -41,5 +42,25 @@ public class UlasanService {
             }
         }
         System.out.println("Ulasan tidak ditemukan");
+    }
+
+    public String semuaUlasanText() {
+        if (daftarUlasan.isEmpty()) {
+            return "Belum ada ulasan.";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (Ulasan u : daftarUlasan) {
+            builder.append("ID Ulasan   : ").append(u.getIdUlasan()).append("\n");
+            builder.append("Produk      : ").append(u.getProduk()).append("\n");
+            builder.append("Komentar    : ").append(u.getKomentar()).append("\n");
+            builder.append("Rating      : ").append(u.getRating()).append("\n");
+            builder.append("---------------------------\n");
+        }
+        return builder.toString();
+    }
+
+    public List<Ulasan> getDaftarUlasan() {
+        return new ArrayList<>(daftarUlasan);
     }
 }

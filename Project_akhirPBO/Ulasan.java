@@ -1,6 +1,7 @@
 public class Ulasan {
     private String komentar;
     private int rating;
+    private String produk;
     private int idUlasan;
 
     public int getIdUlasan() {
@@ -27,8 +28,17 @@ public class Ulasan {
         this.rating = rating;
     }
 
+    public String getProduk() {
+        return produk;
+    }
+
+    public void setProduk(String produk) {
+        this.produk = produk;
+    }
+
     public void tampilkanUlasan() {
+        System.out.println("Produk   : " + produk);
         System.out.println("Komentar : " + komentar);
-        System.out.println("Rating : " + rating);
+        System.out.println("Rating   : " + rating);
     }
 }
