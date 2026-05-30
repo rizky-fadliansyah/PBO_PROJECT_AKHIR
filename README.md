@@ -1,15 +1,15 @@
-- Aplikasi Ulasan Pembeli -
+## Aplikasi Ulasan Pembeli
 
 Aplikasi desktop berbasis Java Swing untuk mengelola ulasan pembeli pada sebuah toko agar mempermudah komentar atau komunikasi antar penjual dan pembeli. Pengguna dapat menambah, memperbarui, menghapus, dan melihat daftar ulasan produk melalui antarmuka grafis (GUI).
 
-- Kebutuhan -
+## Kebutuhan
 
 - **Java Development Kit (JDK) 17** atau lebih baru  
   Download: https://www.oracle.com/java/technologies/downloads/
 
 Tidak memerlukan library eksternal. Semua dependensi sudah tersedia di dalam JDK standar (Java Swing).
 
-- Struktur File -
+## Struktur File
 
 - Main.java           # Entry point + GUI (JFrame)
 - Ulasan.java         # Model data ulasan
@@ -20,7 +20,7 @@ Tidak memerlukan library eksternal. Semua dependensi sudah tersedia di dalam JDK
 - Grosir.java         # Subclass Penjual (grosir)
 - Printer.java        # Utility cetak data
 
-- Installation & Setup -
+## Installation & Setup
 
 ### 1. Clone atau download repository ini
 Ketik di terminal
@@ -53,7 +53,7 @@ java Main
 Jendela aplikasi GUI akan terbuka secara otomatis.
 
 
-- Cara Penggunaan Aplikasi -
+## Cara Penggunaan Aplikasi
 
 |        Aksi        |                                     Cara                                                     |
 |--------------------|----------------------------------------------------------------------------------------------|
