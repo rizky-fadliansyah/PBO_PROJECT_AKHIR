@@ -24,30 +24,31 @@ Tidak memerlukan library eksternal. Semua dependensi sudah tersedia di dalam JDK
 
 ### 1. Clone atau download repository ini
 Ketik di terminal
-git clone https://github.com/rizky-fadliansyah/PBO_PROJECT_AKHIR.git
-cd PBO_PROJECT_AKHIR
+
+> git clone https://github.com/rizky-fadliansyah/PBO_PROJECT_AKHIR.git
+> cd PBO_PROJECT_AKHIR
 
 > Atau download ZIP lalu ekstrak ke folder pilihan kamu.
 
 ### 2. Pastikan Java sudah terinstall
 
 Ketik di terminal
-java -version
+> java -version
 
 Output yang diharapkan (contoh):
-java version "17.0.x" ...
+> java version "17.0.x" ...
 
 ## How to Run
 
 ### Kompilasi semua file Java
 
 Ketik di terminal seperti ini
-javac *.java
+> javac *.java
 
 ### Jalankan aplikasi
 
 Jalankan di terminal 
-java Main
+> java Main
 
 
 Jendela aplikasi GUI akan terbuka secara otomatis.
