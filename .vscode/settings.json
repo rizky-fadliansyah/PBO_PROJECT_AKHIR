@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "Project_akhirPBO"
+    ],
+    "java.project.referencedLibraries": [
+        "lib/*.jar",
+        "lib/**/*.jar"
+    ]
+}
