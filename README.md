@@ -26,6 +26,7 @@ Tidak memerlukan library eksternal. Semua dependensi sudah tersedia di dalam JDK
 Ketik di terminal
 
 > git clone https://github.com/rizky-fadliansyah/PBO_PROJECT_AKHIR.git
+
 > cd PBO_PROJECT_AKHIR
 
 > Atau download ZIP lalu ekstrak ke folder pilihan kamu.
