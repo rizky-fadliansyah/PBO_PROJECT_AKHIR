@@ -11,14 +11,14 @@ Tidak memerlukan library eksternal. Semua dependensi sudah tersedia di dalam JDK
 
 - Struktur File -
 
-├── Main.java           # Entry point + GUI (JFrame)
-├── Ulasan.java         # Model data ulasan
-├── UlasanService.java  # Logika bisnis CRUD ulasan
-├── Pembeli.java        # Model data pembeli
-├── Penjual.java        # Abstract class penjual
-├── Reseller.java       # Subclass Penjual (reseller)
-├── Grosir.java         # Subclass Penjual (grosir)
-└── Printer.java        # Utility cetak data
+- Main.java           # Entry point + GUI (JFrame)
+- Ulasan.java         # Model data ulasan
+- UlasanService.java  # Logika bisnis CRUD ulasan
+- Pembeli.java        # Model data pembeli
+- Penjual.java        # Abstract class penjual
+- Reseller.java       # Subclass Penjual (reseller)
+- Grosir.java         # Subclass Penjual (grosir)
+- Printer.java        # Utility cetak data
 
 - Installation & Setup -
 
