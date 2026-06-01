@@ -14,6 +14,7 @@ public class UlasanServiceTest {
         ulasanService = new UlasanService();
     }
 
+    // tambah Ulasan
     @Test
     public void testTambahUlasan() {
         Ulasan ulasan = new Ulasan();
@@ -29,6 +30,7 @@ public class UlasanServiceTest {
         assertEquals("Laptop", daftar.get(0).getProduk(), "Produk harus 'Laptop'");
     }
 
+    // hapus ulasan
     @Test
     public void testHapusUlasan() {
         Ulasan ulasan = new Ulasan();
@@ -45,6 +47,7 @@ public class UlasanServiceTest {
         assertTrue(daftar.isEmpty(), "Daftar ulasan harus kosong setelah dihapus");
     }
 
+    // update ulasan
     @Test
     public void testUpdateUlasan() {
         Ulasan ulasan = new Ulasan();
