@@ -14,6 +14,7 @@ Tidak memerlukan library eksternal. Semua dependensi sudah tersedia di dalam JDK
 - Main.java           # Entry point + GUI (JFrame)
 - Ulasan.java         # Model data ulasan
 - UlasanService.java  # Logika bisnis CRUD ulasan
+- UlasanServiceTest.java # Unit testing
 - Pembeli.java        # Model data pembeli
 - Penjual.java        # Abstract class penjual
 - Reseller.java       # Subclass Penjual (reseller)
@@ -70,7 +71,7 @@ Jendela aplikasi GUI akan terbuka secara otomatis.
 ## Contributors
 
 - Rizky Fadliansyah — 254311013/Role1
-- Tegar Prasetyo — 254311021/Role2
+- Tegar Ridwan P — 254311021/Role2
 - Daffa Sebastian H. — 254311019/Role3
 
 thanks to my team and ai
