@@ -82,7 +82,8 @@ public class Main extends JFrame {
                 String komentar = komentarField.getText().trim();
                 String ratingText = ratingField.getText().trim();
 
-                if (namaPembeli.isEmpty() || namaPenjual.isEmpty() || produk.isEmpty() || komentar.isEmpty() || ratingText.isEmpty()) {
+                if (namaPembeli.isEmpty() || namaPenjual.isEmpty() || produk.isEmpty() || komentar.isEmpty()
+                        || ratingText.isEmpty()) {
                     throw new IllegalArgumentException("Semua kolom harus diisi.");
                 }
 
@@ -98,14 +99,17 @@ public class Main extends JFrame {
                 ulasan.setRating(rating);
                 service.tambahUlasan(ulasan);
                 nextIdField.setText(String.valueOf(nextId));
-                JOptionPane.showMessageDialog(this, "Ulasan berhasil ditambahkan.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Ulasan berhasil ditambahkan.", "Sukses",
+                        JOptionPane.INFORMATION_MESSAGE);
                 refreshTable();
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Rating harus berupa angka 1 sampai 5.", "Input Salah", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Rating harus berupa angka 1 sampai 5.", "Input Salah",
+                        JOptionPane.ERROR_MESSAGE);
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -126,14 +130,17 @@ public class Main extends JFrame {
                 }
 
                 service.updateUlasan(id, komentar, rating);
-                JOptionPane.showMessageDialog(this, "Update ulasan selesai.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Update ulasan selesai.", "Sukses",
+                        JOptionPane.INFORMATION_MESSAGE);
                 refreshTable();
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "ID dan rating harus angka.", "Input Salah", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "ID dan rating harus angka.", "Input Salah",
+                        JOptionPane.ERROR_MESSAGE);
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -152,7 +159,8 @@ public class Main extends JFrame {
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 

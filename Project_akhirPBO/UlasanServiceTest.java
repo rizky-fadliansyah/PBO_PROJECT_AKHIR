@@ -62,4 +62,35 @@ public class UlasanServiceTest {
         assertEquals("Baru", daftar.get(0).getKomentar(), "Komentar harus terupdate menjadi 'Baru'");
         assertEquals(5, daftar.get(0).getRating(), "Rating harus terupdate menjadi 5");
     }
+
+    // read
+    @Test
+    public void testSemuaUlasanTextKosong() {
+        String hasil = ulasanService.semuaUlasanText();
+        assertEquals("Belum ada ulasan.", hasil, "Pesan harus mengindikasikan belum ada ulasan");
+    }
+
+    @Test
+    public void testHapusUlasanTidakDitemukan() {
+        Ulasan ulasan = new Ulasan();
+        ulasan.setIdUlasan(1);
+        ulasanService.tambahUlasan(ulasan);
+        ulasanService.hapusUlasan(99);
+        assertEquals(1, ulasanService.getDaftarUlasan().size(), "Ukuran harus tetap 1 karena ID 99 tidak ada");
+    }
+
+    @Test
+    public void testUpdateUlasanTidakDitemukan() {
+        Ulasan ulasan = new Ulasan();
+        ulasan.setIdUlasan(1);
+        ulasan.setKomentar("Bagus");
+        ulasan.setRating(5);
+        ulasanService.tambahUlasan(ulasan);
+
+        ulasanService.updateUlasan(99, "Jelek", 1);
+
+        List<Ulasan> daftar = ulasanService.getDaftarUlasan();
+        assertEquals("Bagus", daftar.get(0).getKomentar(), "Komentar tidak boleh berubah");
+        assertEquals(5, daftar.get(0).getRating(), "Rating tidak boleh berubah");
+    }
 }
