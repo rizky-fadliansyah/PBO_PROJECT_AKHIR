@@ -44,6 +44,21 @@ public class UlasanService {
         System.out.println("Ulasan tidak ditemukan");
     }
 
+    //filter ulasan VIP
+    public List<Ulasan> filterUlasanVip() {
+        List<Ulasan> hasilFilter = new ArrayList<>();
+
+        for (Ulasan u : daftarUlasan) {
+            if (u instanceof UlasanPrioritas) {
+                UlasanPrioritas ulasanVip = (UlasanPrioritas) u;
+                if (ulasanVip.getIsMemberVip()) {
+                    hasilFilter.add(ulasanVip);
+                }
+            }
+        }
+        return hasilFilter;
+    }
+
     public String semuaUlasanText() {
         if (daftarUlasan.isEmpty()) {
             return "Belum ada ulasan.";

@@ -9,7 +9,7 @@ public class UlasanPrioritas extends Ulasan {
     }
 
     //getter
-    public boolean isMemberVip() {
+    public boolean getIsMemberVip() {
         return isMemberVip;
     }
 
@@ -22,6 +22,6 @@ public class UlasanPrioritas extends Ulasan {
     @Override
     public String tampilkanInfo() {
         String label = this.isMemberVip ? "VIP" : "Reguler";
-        return "Ulasan Prioritas | Produk: " + this.getProduk() + ", Komentar: " + this.getKomentar() + ", Rating: " + this.getRating() + ", VIP: " + (isMemberVip ? "Ya" : "Tidak");
+        return "Ulasan " + label + " | Produk: " + this.getProduk() + ", Komentar: " + this.getKomentar() + ", Rating: " + this.getRating();
     }
 }
