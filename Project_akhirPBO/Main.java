@@ -2,10 +2,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class Main extends JFrame {
     private final UlasanService service = new UlasanService();
+    private final List<Penjual> daftarPenjual = new ArrayList<>();
     private int nextId = 1;
     private final DefaultTableModel tableModel;
 
@@ -74,9 +77,13 @@ public class Main extends JFrame {
         JMenu menuAksi = new JMenu("Aksi");
         JMenuItem menuItemCekId = new JMenuItem("Periksa ID Ulasan");
         JMenuItem menuItemTambahInteraktif = new JMenuItem("Tambah Ulasan Interaktif");
+        JMenuItem menuItemTambahDistributor = new JMenuItem("Tambah Distributor Baru");
+        JMenuItem menuItemFilterDistributor = new JMenuItem("Filter Distributor Wilayah");
         JMenuItem menuItemFilterSort = new JMenuItem("Filter/Sorting Ulasan");
         menuAksi.add(menuItemCekId);
         menuAksi.add(menuItemTambahInteraktif);
+        menuAksi.add(menuItemTambahDistributor);
+        menuAksi.add(menuItemFilterDistributor);
         menuAksi.add(menuItemFilterSort);
         menuBar.add(menuAksi);
         setJMenuBar(menuBar);
@@ -101,6 +108,27 @@ public class Main extends JFrame {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        menuItemTambahDistributor.addActionListener(e -> {
+            try {
+                tambahDistributorInteraktif();
+            } catch (InputTidakValidException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        menuItemFilterDistributor.addActionListener(e -> {
+            try {
+                String wilayah = JOptionPane.showInputDialog(this, "Masukkan wilayah distributor untuk difilter:", "Filter Distributor", JOptionPane.QUESTION_MESSAGE);
+                if (wilayah == null) {
+                    return;
+                }
+                String hasil = filterDistributorByWilayah(wilayah.trim());
+                JOptionPane.showMessageDialog(this, hasil, "Hasil Filter Distributor", JOptionPane.INFORMATION_MESSAGE);
+            } catch (InputTidakValidException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -297,6 +325,48 @@ public class Main extends JFrame {
         service.tambahUlasan(ulasan);
         nextIdField.setText(String.valueOf(nextId));
         JOptionPane.showMessageDialog(this, "Ulasan berhasil ditambahkan melalui menu interaktif.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void tambahDistributorInteraktif() throws InputTidakValidException {
+        String idText = JOptionPane.showInputDialog(this, "Masukkan ID Distributor:", "Tambah Distributor", JOptionPane.QUESTION_MESSAGE);
+        validateIdInput(idText);
+        int id = Integer.parseInt(idText.trim());
+
+        String namaToko = JOptionPane.showInputDialog(this, "Masukkan nama toko distributor:", "Tambah Distributor", JOptionPane.QUESTION_MESSAGE);
+        if (namaToko == null || namaToko.trim().isEmpty()) {
+            throw new InputTidakValidException("Nama toko distributor harus diisi.");
+        }
+
+        String wilayah = JOptionPane.showInputDialog(this, "Masukkan wilayah distributor:", "Tambah Distributor", JOptionPane.QUESTION_MESSAGE);
+        if (wilayah == null || wilayah.trim().isEmpty()) {
+            throw new InputTidakValidException("Wilayah distributor harus diisi.");
+        }
+
+        Distributor distributor = new Distributor(id, namaToko.trim(), wilayah.trim());
+        daftarPenjual.add(distributor);
+        JOptionPane.showMessageDialog(this, "Distributor berhasil ditambahkan.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private String filterDistributorByWilayah(String wilayah) throws InputTidakValidException {
+        if (wilayah == null || wilayah.trim().isEmpty()) {
+            throw new InputTidakValidException("Wilayah filter tidak boleh kosong.");
+        }
+        StringBuilder builder = new StringBuilder();
+        for (Penjual penjual : daftarPenjual) {
+            if (penjual instanceof Distributor) {
+                Distributor distributor = (Distributor) penjual;
+                if (distributor.getWilayah().equalsIgnoreCase(wilayah.trim())) {
+                    builder.append("ID: ").append(distributor.getIdPenjual())
+                            .append(", Toko: ").append(distributor.getNamaToko())
+                            .append(", Wilayah: ").append(distributor.getWilayah())
+                            .append("\n");
+                }
+            }
+        }
+        if (builder.length() == 0) {
+            return "Tidak ada distributor di wilayah " + wilayah + ".";
+        }
+        return builder.toString();
     }
 
     private java.util.List<Ulasan> filterReviews(int minRating) {
