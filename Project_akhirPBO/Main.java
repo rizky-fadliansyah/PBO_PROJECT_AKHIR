@@ -73,7 +73,11 @@ public class Main extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuAksi = new JMenu("Aksi");
         JMenuItem menuItemCekId = new JMenuItem("Periksa ID Ulasan");
+        JMenuItem menuItemTambahInteraktif = new JMenuItem("Tambah Ulasan Interaktif");
+        JMenuItem menuItemFilterSort = new JMenuItem("Filter/Sorting Ulasan");
         menuAksi.add(menuItemCekId);
+        menuAksi.add(menuItemTambahInteraktif);
+        menuAksi.add(menuItemFilterSort);
         menuBar.add(menuAksi);
         setJMenuBar(menuBar);
 
@@ -86,6 +90,38 @@ public class Main extends JFrame {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        menuItemTambahInteraktif.addActionListener(e -> {
+            try {
+                tambahUlasanInteraktif(nextIdField);
+                refreshTable();
+            } catch (InputTidakValidException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        menuItemFilterSort.addActionListener(e -> {
+            String[] options = {"Filter Rating >= 4", "Urutkan Rating Menurun", "Urutkan Rating Menaik", "Tampilkan Semua"};
+            int choice = JOptionPane.showOptionDialog(this,
+                    "Pilih aksi filter/sorting:",
+                    "Filter/Sorting",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (choice == 0) {
+                refreshTable(filterReviews(4));
+            } else if (choice == 1) {
+                refreshTable(sortReviews(true));
+            } else if (choice == 2) {
+                refreshTable(sortReviews(false));
+            } else if (choice == 3) {
+                refreshTable();
             }
         });
 
@@ -207,8 +243,11 @@ public class Main extends JFrame {
     }
 
     private void refreshTable() {
+        refreshTable(service.getDaftarUlasan());
+    }
+
+    private void refreshTable(java.util.List<Ulasan> reviews) {
         tableModel.setRowCount(0);
-        java.util.List<Ulasan> reviews = service.getDaftarUlasan();
         for (Ulasan ulasan : reviews) {
             Vector<Object> row = new Vector<>();
             row.add(ulasan.getIdUlasan());
@@ -217,6 +256,59 @@ public class Main extends JFrame {
             row.add(ulasan.getRating());
             tableModel.addRow(row);
         }
+    }
+
+    private void tambahUlasanInteraktif(JTextField nextIdField) throws InputTidakValidException {
+        String produk = JOptionPane.showInputDialog(this, "Masukkan nama produk:", "Tambah Ulasan", JOptionPane.QUESTION_MESSAGE);
+        if (produk == null) {
+            return;
+        }
+        if (produk.trim().isEmpty()) {
+            throw new InputTidakValidException("Produk harus diisi.");
+        }
+
+        String ratingText = JOptionPane.showInputDialog(this, "Masukkan rating [1-5]:", "Tambah Ulasan", JOptionPane.QUESTION_MESSAGE);
+        if (ratingText == null) {
+            return;
+        }
+        int rating;
+        try {
+            rating = Integer.parseInt(ratingText.trim());
+        } catch (NumberFormatException ex) {
+            throw new InputTidakValidException("Rating harus berupa angka bulat.", ex);
+        }
+        if (rating < 1 || rating > 5) {
+            throw new InputTidakValidException("Rating harus antara 1 sampai 5.");
+        }
+
+        String komentar = JOptionPane.showInputDialog(this, "Masukkan komentar:", "Tambah Ulasan", JOptionPane.QUESTION_MESSAGE);
+        if (komentar == null) {
+            return;
+        }
+        if (komentar.trim().isEmpty()) {
+            throw new InputTidakValidException("Komentar harus diisi.");
+        }
+
+        Ulasan ulasan = new Ulasan();
+        ulasan.setIdUlasan(nextId++);
+        ulasan.setProduk(produk.trim());
+        ulasan.setKomentar(komentar.trim());
+        ulasan.setRating(rating);
+        service.tambahUlasan(ulasan);
+        nextIdField.setText(String.valueOf(nextId));
+        JOptionPane.showMessageDialog(this, "Ulasan berhasil ditambahkan melalui menu interaktif.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private java.util.List<Ulasan> filterReviews(int minRating) {
+        java.util.List<Ulasan> reviews = service.getDaftarUlasan();
+        reviews.removeIf(ulasan -> ulasan.getRating() < minRating);
+        return reviews;
+    }
+
+    private java.util.List<Ulasan> sortReviews(boolean descending) {
+        java.util.List<Ulasan> reviews = service.getDaftarUlasan();
+        reviews.sort((a, b) -> descending ? Integer.compare(b.getRating(), a.getRating()) : Integer.compare(a.getRating(), b.getRating()));
+        return reviews;
     }
 
     private void validateIdInput(String idText) throws InputTidakValidException {
