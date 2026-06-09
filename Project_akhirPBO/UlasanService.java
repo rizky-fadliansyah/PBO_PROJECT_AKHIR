@@ -4,12 +4,24 @@ import java.util.List;
 public class UlasanService {
     private ArrayList<Ulasan> daftarUlasan = new ArrayList<>();
 
-    public void tambahUlasan(Ulasan ulasan) {
+    public void tambahUlasan(Ulasan ulasan) throws InputTidakValidException {
+        if (ulasan == null) {
+            throw new InputTidakValidException("Ulasan tidak boleh kosong.");
+        }
+        if (ulasan.getProduk() == null || ulasan.getProduk().trim().isEmpty()) {
+            throw new InputTidakValidException("Produk harus diisi.");
+        }
+        if (ulasan.getKomentar() == null || ulasan.getKomentar().trim().isEmpty()) {
+            throw new InputTidakValidException("Komentar harus diisi.");
+        }
+        if (ulasan.getRating() < 1 || ulasan.getRating() > 5) {
+            throw new InputTidakValidException("Rating harus antara 1 sampai 5.");
+        }
         daftarUlasan.add(ulasan);
         System.out.println("Ulasan ditambahkan");
     }
 
-    public void hapusUlasan(int id) {
+    public void hapusUlasan(int id) throws InputTidakValidException {
         for (Ulasan u : daftarUlasan) {
             if (u.getIdUlasan() == id) {
                 daftarUlasan.remove(u);
@@ -17,7 +29,7 @@ public class UlasanService {
                 return;
             }
         }
-        System.out.println("Ulasan tidak ditemukan");
+        throw new InputTidakValidException("Ulasan dengan ID " + id + " tidak ditemukan.");
     }
 
     public void lihatUlasan() {
@@ -32,7 +44,7 @@ public class UlasanService {
         }
     }
 
-    public void updateUlasan(int id, String komentarBaru, int ratingBaru) {
+    public void updateUlasan(int id, String komentarBaru, int ratingBaru) throws InputTidakValidException {
         for (Ulasan u : daftarUlasan) {
             if (u.getIdUlasan() == id) {
                 u.setKomentar(komentarBaru);
@@ -41,7 +53,7 @@ public class UlasanService {
                 return;
             }
         }
-        System.out.println("Ulasan tidak ditemukan");
+        throw new InputTidakValidException("Ulasan dengan ID " + id + " tidak ditemukan.");
     }
 
     public String semuaUlasanText() {
