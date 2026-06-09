@@ -1,3 +1,6 @@
+# Aplikasi Ulasan Pembeli - Update Versi 2.0 (UAS)
+Pada Pembaruan Versi 2.0 ini, aplikasi telah dilengkapi dengan fitur "Kategori Premium/Prioritas" untuk mendukung manajemen pelanggan VIP.Pembaruan ini mengimplementasikan konsep pewarisan (Inheritance) dan polimorfisme melalui class `UlasanPrioritas` yang memungkinkan pengguna untuk menandai ulasan tertentu sebagai ulasan VIP.Selain itu, telah ditambahkan fitur Filter VIP pada antarmuka pengguna (GUI) yang memproses pencarian data spesifik di dalam struktur data ArrayList
+
 ## Aplikasi Ulasan Pembeli
 
 Aplikasi desktop berbasis Java Swing untuk mengelola ulasan pembeli pada sebuah toko agar mempermudah komentar atau komunikasi antar penjual dan pembeli. Pengguna dapat menambah, memperbarui, menghapus, dan melihat daftar ulasan produk melalui antarmuka grafis (GUI).
