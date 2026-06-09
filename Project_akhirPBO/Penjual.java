@@ -17,4 +17,12 @@ public abstract class Penjual {
     public void setNamaToko(String namaToko) {
         this.namaToko = namaToko;
     }
+
+    public void tampilkanDetail() {
+        System.out.println("Penjual: " + namaToko);
+    }
+
+    public void gunakanSkill() {
+        System.out.println("Penjual menggunakan kemampuan dasar.");
+    }
 }
