@@ -27,7 +27,11 @@ public class Main extends JFrame {
         JTable table = new JTable(tableModel);
         JScrollPane tableScroll = new JScrollPane(table);
 
-        JPanel formPanel = new JPanel(new GridLayout(10, 2, 10, 10));
+        JCheckBox chkVIP = new JCheckBox("Member VIP");
+        JButton btnFilterVIP = new JButton("Filter Ulasan VIP");
+
+        JPanel formPanel = new JPanel(new GridLayout(12, 2, 10, 10));
+
         formPanel.add(new JLabel("Nama Pembeli:"));
         JTextField pembeliField = new JTextField();
         formPanel.add(pembeliField);
@@ -57,6 +61,8 @@ public class Main extends JFrame {
         JTextField komentarField = new JTextField();
         formPanel.add(komentarField);
 
+        formPanel.add(chkVIP);
+        formPanel.add(btnFilterVIP);
         JButton addButton = new JButton("Tambah Ulasan");
         JButton updateButton = new JButton("Update Ulasan");
         JButton deleteButton = new JButton("Hapus Ulasan");
@@ -93,10 +99,19 @@ public class Main extends JFrame {
 
                 int rating = Integer.parseInt(ratingText);
                 if (rating < 1 || rating > 5) {
-                    throw new IllegalArgumentException("Rating harus antara 1 sampai 5.");
+                    throw new RatingTidakValidException("Rating harus antara 1 sampai 5.");
                 }
 
-                Ulasan ulasan = new Ulasan();
+                //polimorfisme untuk menentukan jenis ulasan berdasarkan checkbox VIP
+                Ulasan ulasan;
+                if (chkVIP.isSelected()) {
+                    UlasanPrioritas ulasanVip = new UlasanPrioritas();
+                    ulasanVip.setMemberVip(true);
+                    ulasan = ulasanVip;
+                } else {
+                    ulasan = new Ulasan();
+                }
+
                 ulasan.setIdUlasan(nextId++);
                 ulasan.setProduk(produk);
                 ulasan.setKomentar(komentar);
@@ -106,7 +121,7 @@ public class Main extends JFrame {
                 JOptionPane.showMessageDialog(this, "Ulasan berhasil ditambahkan.", "Sukses",
                         JOptionPane.INFORMATION_MESSAGE);
                 refreshTable();
-            } catch (NumberFormatException ex) {
+            } catch (RatingTidakValidException ex) {
                 JOptionPane.showMessageDialog(this, "Rating harus berupa angka 1 sampai 5.", "Input Salah",
                         JOptionPane.ERROR_MESSAGE);
             } catch (IllegalArgumentException ex) {
@@ -130,7 +145,7 @@ public class Main extends JFrame {
                 int id = Integer.parseInt(idText);
                 int rating = Integer.parseInt(ratingText);
                 if (rating < 1 || rating > 5) {
-                    throw new IllegalArgumentException("Rating harus antara 1 sampai 5.");
+                    throw new RatingTidakValidException("Rating harus antara 1 sampai 5.");
                 }
 
                 service.updateUlasan(id, komentar, rating);
@@ -140,12 +155,37 @@ public class Main extends JFrame {
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "ID dan rating harus angka.", "Input Salah",
                         JOptionPane.ERROR_MESSAGE);
+            } catch (RatingTidakValidException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Rating Tidak Valid", JOptionPane.ERROR_MESSAGE);
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
+        });
+
+        //filter ulasan VIP
+        btnFilterVIP.addActionListener(e -> {
+            tableModel.setRowCount(0);
+            java.util.List<Ulasan> daftarVip = service.filterUlasanVip();
+            
+            for (Ulasan ulasan : daftarVip) {
+                Vector<Object> row = new Vector<>();
+                row.add(ulasan.getIdUlasan());
+
+                if (ulasan instanceof UlasanPrioritas) {
+                    UlasanPrioritas ulasanVip = (UlasanPrioritas) ulasan;
+                    row.add(ulasanVip.getProduk() + " (VIP)");
+                } else {
+                    row.add(ulasan.getProduk());
+                }
+
+                row.add(ulasan.getKomentar());
+                row.add(ulasan.getRating());
+                tableModel.addRow(row);
+            }
+
         });
 
         deleteButton.addActionListener(e -> {
