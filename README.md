@@ -1,4 +1,4 @@
-## Aplikasi Ulasan Pembeli
+## Aplikasi Ulasan Pembeli (VERSI 2.0)
 
 Aplikasi desktop berbasis Java Swing untuk mengelola ulasan pembeli pada sebuah toko agar mempermudah komentar atau komunikasi antar penjual dan pembeli. Pengguna dapat menambah, memperbarui, menghapus, dan melihat daftar ulasan produk melalui antarmuka grafis (GUI).
 
