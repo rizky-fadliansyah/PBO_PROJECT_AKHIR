@@ -87,6 +87,10 @@ public class Main extends JFrame {
                     throw new IllegalArgumentException("Semua kolom harus diisi.");
                 }
 
+                if (komentar.length() < 10) {
+                    throw new IllegalArgumentException("Komentar harus memiliki minimal 10 karakter.");
+                }
+
                 int rating = Integer.parseInt(ratingText);
                 if (rating < 1 || rating > 5) {
                     throw new IllegalArgumentException("Rating harus antara 1 sampai 5.");

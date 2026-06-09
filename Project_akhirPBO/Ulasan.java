@@ -41,4 +41,8 @@ public class Ulasan {
         System.out.println("Komentar : " + komentar);
         System.out.println("Rating   : " + rating);
     }
+
+    public String tampilkanInfo(){
+        return "Ulasan Reguler | Produk: " + this.produk + ", Komentar: " + this.komentar + ", Rating: " + this.rating;
+    }
 }
