@@ -70,6 +70,25 @@ public class Main extends JFrame {
         formPanel.add(refreshButton);
         formPanel.add(new JLabel());
 
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuAksi = new JMenu("Aksi");
+        JMenuItem menuItemCekId = new JMenuItem("Periksa ID Ulasan");
+        menuAksi.add(menuItemCekId);
+        menuBar.add(menuAksi);
+        setJMenuBar(menuBar);
+
+        menuItemCekId.addActionListener(e -> {
+            try {
+                String inputId = JOptionPane.showInputDialog(this, "Masukkan ID Ulasan untuk diperiksa:", "Periksa ID", JOptionPane.QUESTION_MESSAGE);
+                validateIdInput(inputId);
+                JOptionPane.showMessageDialog(this, "ID ulasan valid: " + inputId, "Validasi Berhasil", JOptionPane.INFORMATION_MESSAGE);
+            } catch (InputTidakValidException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Salah", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         setLayout(new BorderLayout(10, 10));
         add(formPanel, BorderLayout.WEST);
         add(tableScroll, BorderLayout.CENTER);
@@ -197,6 +216,20 @@ public class Main extends JFrame {
             row.add(ulasan.getKomentar());
             row.add(ulasan.getRating());
             tableModel.addRow(row);
+        }
+    }
+
+    private void validateIdInput(String idText) throws InputTidakValidException {
+        if (idText == null || idText.trim().isEmpty()) {
+            throw new InputTidakValidException("ID tidak boleh kosong.");
+        }
+        try {
+            int id = Integer.parseInt(idText.trim());
+            if (id <= 0) {
+                throw new InputTidakValidException("ID harus bilangan positif.");
+            }
+        } catch (NumberFormatException ex) {
+            throw new InputTidakValidException("ID harus berupa angka bulat.", ex);
         }
     }
 
