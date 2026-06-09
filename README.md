@@ -74,4 +74,12 @@ Jendela aplikasi GUI akan terbuka secara otomatis.
 - Tegar Ridwan P — 254311021/Role2
 - Daffa Sebastian H. — 254311019/Role3
 
+TAMBAHAN  UPDATE ROLE UAS_DAFASEBASTIANH_254311019
+
+Update untuk Main.java
+
+- Menambahkan InputTidakValidException sebagai custom exception
+- Menambahkan aksi berupa fitur shorting/filter pada ulasan
+- Menambahkan try-catch menggunakan exception InputTidakValid
+
 thanks to my team and ai
