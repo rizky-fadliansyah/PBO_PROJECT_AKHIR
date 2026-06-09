@@ -1,6 +1,15 @@
 public class Pembeli {
+
     private int idPembeli;
     private String nama;
+
+    public Pembeli() {
+    }
+    
+    public Pembeli(int idPembeli, String nama) {
+        this.idPembeli = idPembeli;
+        this.nama = nama;
+    }
 
     public int getIdPembeli() {
         return idPembeli;
@@ -19,6 +28,8 @@ public class Pembeli {
     }
 
     public void beriUlasan() {
-        System.out.println("Pembeli memberi ulasan");
+        System.out.println(
+                nama + " memberikan ulasan."
+        );
     }
 }
